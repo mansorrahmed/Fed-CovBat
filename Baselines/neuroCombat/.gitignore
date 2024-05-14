@@ -1,0 +1,15 @@
+sandbox/
+
+*.DS_Store
+*.pyc
+
+*.egg-info
+__pycache__
+
+
+# test-related
+.coverage
+.cache
+
+# developer environments
+.idea
