@@ -42,35 +42,36 @@ def design_mat(mod, numerical_covariates, batch_levels):
     sys.stderr.write("\t" + ", ".join(other_cols) + '\n')
     return design
 
-"""Correction of *Cov*ariance *Bat* effects
-
-Parameters
-----------
-data : pandas.DataFrame
-    A (n_features, n_samples) dataframe of the expression or methylation
-    data to batch correct
-batch : pandas.Series
-    A column corresponding to the batches in the data, with index same as
-    the columns that appear in ``data``
-model : patsy.design_info.DesignMatrix, optional
-    A model matrix describing metadata on the samples which could be
-    causing batch effects. If not provided, then will attempt to coarsely
-    correct just from the information provided in ``batch``
-numerical_covariates : list-like
-    List of covariates in the model which are numerical, rather than
-    categorical
-pct_var : numeric
-    Numeric between 0 and 1 indicating the percent of variation that is
-    explained by the adjusted PCs
-n_pc : numeric
-    If >0, then this specifies the number of PCs to adjust. Overrides pct_var
-
-Returns
--------
-corrected : pandas.DataFrame
-    A (n_features, n_samples) dataframe of the batch-corrected data
-"""
 def covbat(data, batch, model=None, numerical_covariates=None, pct_var=0.95, n_pc=0):
+    """
+    Correction of *Cov*ariance *Bat* effects
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        A (n_features, n_samples) dataframe of the expression or methylation
+        data to batch correct
+    batch : pandas.Series
+        A column corresponding to the batches in the data, with index same as
+        the columns that appear in ``data``
+    model : patsy.design_info.DesignMatrix, optional
+        A model matrix describing metadata on the samples which could be
+        causing batch effects. If not provided, then will attempt to coarsely
+        correct just from the information provided in ``batch``
+    numerical_covariates : list-like
+        List of covariates in the model which are numerical, rather than
+        categorical
+    pct_var : numeric
+        Numeric between 0 and 1 indicating the percent of variation that is
+        explained by the adjusted PCs
+    n_pc : numeric
+        If >0, then this specifies the number of PCs to adjust. Overrides pct_var
+
+    Returns
+    -------
+    corrected : pandas.DataFrame
+        A (n_features, n_samples) dataframe of the batch-corrected data
+    """
+
     if isinstance(numerical_covariates, str):
         numerical_covariates = [numerical_covariates]
     if numerical_covariates is None:
@@ -89,7 +90,7 @@ def covbat(data, batch, model=None, numerical_covariates=None, pct_var=0.95, n_p
     n_array = float(sum(n_batches))
 
     # drop intercept
-    drop_cols = [cname for cname, inter in  ((model == 1).all()).iteritems() if inter == True]
+    drop_cols = [cname for cname, inter in  ((model == 1).all()).items() if inter == True]
     drop_idxs = [list(model.columns).index(cdrop) for cdrop in drop_cols]
     model = model[[c for c in model.columns if not c in drop_cols]]
     numerical_covariates = [list(model.columns).index(c) if isinstance(c, str) else c
@@ -231,7 +232,7 @@ def combat(data, batch, model=None, numerical_covariates=None, eb=True):
     n_array = float(sum(n_batches))
 
     # drop intercept
-    drop_cols = [cname for cname, inter in  ((model == 1).all()).iteritems() if inter == True]
+    drop_cols = [cname for cname, inter in  ((model == 1).all()).items() if inter == True]
     drop_idxs = [list(model.columns).index(cdrop) for cdrop in drop_cols]
     model = model[[c for c in model.columns if not c in drop_cols]]
     numerical_covariates = [list(model.columns).index(c) if isinstance(c, str) else c
