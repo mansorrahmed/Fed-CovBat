@@ -6,4 +6,4 @@
 - The paper that original implemented ComBat is a distributed setting: [https://github.com/andy1764/Distributed-ComBat.git](https://github.com/andy1764/Distributed-ComBat.git)
 
 
-
+python3 -m pip install patsy

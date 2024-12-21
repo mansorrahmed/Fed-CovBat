@@ -28,10 +28,10 @@ class RegressionModelTrainer:
             'Lasso Regression': Lasso(),
             'Support Vector Regression': SVR(kernel='rbf'),
             'Decision Tree': DecisionTreeRegressor(random_state=42),
-            'Random Forest': RandomForestRegressor(n_estimators=100, n_jobs=-1, random_state=42),
-            'Gradient Boosting': GradientBoostingRegressor(n_estimators=100, random_state=42),
-            'Hist Gradient Boosting': HistGradientBoostingRegressor(max_iter=100, random_state=42),
-            'XGBoost': xgb.XGBRegressor(n_estimators=100, n_jobs=-1, random_state=42, verbosity=0)
+            'Random Forest': RandomForestRegressor(n_estimators=100, n_jobs=-1, random_state=42)
+            # 'Gradient Boosting': GradientBoostingRegressor(n_estimators=100, random_state=42),
+            # 'Hist Gradient Boosting': HistGradientBoostingRegressor(max_iter=100, random_state=42),
+            # 'XGBoost': xgb.XGBRegressor(n_estimators=100, n_jobs=-1, random_state=42, verbosity=0)
         }
         self.metrics = ['MAE', 'RMSE', 'R2 Score', 'Runtime']
 
