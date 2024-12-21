@@ -24,18 +24,18 @@ def neuroCombat(data,
         e.g. cortical thickness measurements, image voxels, etc
 
     covars : a pandas data frame w/ shape = (samples, features)
-        demographic/phenotypic/behavioral/batch data 
+        demographic/phenotypic/behavioral/batch data # DataFrame with both age and site
         
-    batch_col : string
-        - batch effect variable
+    batch_col : string 
+        - batch effect variable ## Column name for batch
         - e.g. scan site
 
     discrete_cols : string or list of strings
         - variables which are categorical that you want to predict
         - e.g. binary depression or no depression
 
-    continuous_cols : string or list of strings
-        - variables which are continous that you want to predict
+    continuous_cols : string or list of strings 
+        - variables which are continous that you want to predict ## List of continuous variable names
         - e.g. depression sub-scores
 
     Returns
@@ -113,7 +113,7 @@ def neuroCombat(data,
 
     bayes_data = np.array(bayes_data)
 
-    return bayes_data.T, gamma_star, delta_star
+    return bayes_data.T
 
 def make_design_matrix(Y, batch_col, cat_cols, num_cols):
     """
