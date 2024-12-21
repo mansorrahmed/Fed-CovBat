@@ -26,12 +26,12 @@ class ClassificationModelTrainer:
         self.stratify_cols = stratify_cols
         self.models = {
             'SVM': self.svm_fun,
-            'NB': self.gaus_nb_fun
-            # 'MLP': self.mlp_fun,
-            # 'KNN': self.knn_fun,
-            # 'RF': self.rf_fun,
-            # 'LR': self.lr_fun,
-            # 'DT': self.fun_decision_tree
+            'NB': self.gaus_nb_fun,
+            'MLP': self.mlp_fun,
+            'KNN': self.knn_fun,
+            'RF': self.rf_fun,
+            'LR': self.lr_fun,
+            'DT': self.fun_decision_tree
         }
         self.metrics = ['Accuracy', 'Precision', 'Recall', 'F1 (weighted)', 'F1 (Macro)', 'ROC AUC', 'Balanced Accuracy', 'Runtime']
 

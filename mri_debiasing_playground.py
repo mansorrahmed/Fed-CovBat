@@ -9,15 +9,19 @@ from name_that_site import ClassificationModelTrainer
 from brain_age_estimation import RegressionModelTrainer
 import patsy
 import time
-import sys
+import sys, argparse
 import baselines.CovBat.covbat as cb
 import warnings
 
 warnings.filterwarnings('ignore')  # Suppress warnings for cleaner output
 
 def main():
+    parser = argparse.ArgumentParser(description='MRI data harmonization and testing scripts')
+    parser.add_argument('--data_dir', type=str, required=True )
+    args = parser.parse_args()
+    openbhb_dir = args.data_dir
 
-    openbhb_dir = "/Users/mansoor/Documents/GSU/Projects/Neuroimaging/Dataset/OpenBHB/"
+    # openbhb_dir = "/Users/mansoor/Documents/GSU/Projects/Neuroimaging/Dataset/OpenBHB/"
     roi_dir = os.path.join(openbhb_dir , "roi/")
     debiased_roi_dir = os.path.join(openbhb_dir , "debiased_roi/")
     labels_dir = os.path.join(openbhb_dir , "labels/")
@@ -75,6 +79,7 @@ def main():
         harmonization_strategies = ['unharmonized', 'combat', 'covbat']
         datasets = [unharmonized, combat_harmonized, covbat_harmonized]
         print(f"Started training/testing models on {feature_set_i} dataset..")
+        start = time.time()
 
         for strategy, dataset in zip(harmonization_strategies, datasets):
             stratify_cols = covariates[['age', 'sex', 'siteXacq']].apply(tuple, axis=1).factorize()[0]
@@ -108,40 +113,11 @@ def main():
         mean_df.iloc[:,1:].to_csv(os.path.join(results_name_that_dataset_dir, f'name_that_site_mean_results_{feature_set_i}.csv'), index=True)
         full_df.to_csv(os.path.join(results_name_that_dataset_dir, f'name_that_site_full_k_folds_results_{feature_set_i}.csv'), index=True)
         mean_std_df.iloc[:,1:].to_csv(os.path.join(results_name_that_dataset_dir, f'name_that_site_mean_std_results_{feature_set_i}.csv'), index=True)
-        print(f"Complete results saved for {feature_set_i} dataset..")
+        
+        stop = time.time()
+        time_new = stop - start
+        print(f"Training/testing completed for {feature_set_i} dataset in {time_new/60} minutes and results saved..")
 
-
-    # # =========================
-    # # Step 1: Parse Command-Line Arguments
-    # # =========================
-    # parser = argparse.ArgumentParser(description='Data Preprocessing and Model Training Script')
-    # parser.add_argument(
-    #     '--proj_dir', 
-    #     type=str,
-    #     required=True
-    #     )
-    # parser.add_argument(
-    #     '--strategy', 
-    #     type=str,
-    #     required=False,
-    #     choices=["mean_imp", "median_imp", "ffill_bfill_imp", "linear_interp_imp", "kalman_imp", "mice_imp", "knn_imp", "lstm_imp", "rnn_imp"],
-    #     help='Imputation strategy to use. Choices are: mean_imp, median_imp, ffill_bfill_imp, linear_interp_imp, kalman_imp, mice_imp, knn_imp, lstm_imp, rnn_imp'
-    # )
-    # parser.add_argument(
-    #     '--epochs', 
-    #     type=int,
-    #     required=False
-    #     )
-    # parser.add_argument(
-    #     '--models', 
-    #     type=str,
-    #     required=False
-    #     )
-    # args = parser.parse_args()
-    # strategy = args.strategy
-    # proj_dir = args.proj_dir
-    # epochs = args.epochs
-    # models_category = args.models
 
    
     
