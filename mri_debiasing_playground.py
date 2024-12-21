@@ -36,7 +36,7 @@ def main():
 
     participants = pd.read_csv(f_participants)
     sites = pd.read_csv(f_sites, index_col=False)
-    features_set = ["desikan_roi", "desikan_cortical_thickness", "normalized_vbm_roi", "destrieux_intrinsic_curvature_index",
+    features_set = ["desikan_roi", "desikan_cortical_thickness", "vbm_roi", "destrieux_intrinsic_curvature_index",
         "destrieux_gray_matter_volume", "desikan_gray_matter_volume", "desikan_integrated_rectified_gaussian_curvature",
         "destrieux_surface_area", "desikan_average_thickness", "desikan_surface_area", "destrieux_thickness_stddev",
         "desikan_intrinsic_curvature_index", "destrieux_integrated_rectified_mean_curvature", "destrieux_roi",
